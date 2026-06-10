@@ -1,0 +1,1479 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PiperChain API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Create User",
+        "operationId": "create_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/authenticate": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Authenticate User",
+        "operationId": "authenticate_user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAuthenticateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallets": {
+      "post": {
+        "tags": ["Wallets"],
+        "summary": "Create Wallet",
+        "operationId": "create_wallet",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WalletCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallets/{address}/balance": {
+      "get": {
+        "tags": ["Wallets"],
+        "summary": "Get Wallet Balance",
+        "operationId": "get_wallet_balance",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Address"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "title": "Response Get Wallet Balance Wallets  Address  Balance Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wallets/{address}/transactions": {
+      "get": {
+        "tags": ["Wallets"],
+        "summary": "Get Wallet Transactions",
+        "operationId": "get_wallet_transactions",
+        "parameters": [
+          {
+            "name": "address",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Address"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionDetailResponse"
+                  },
+                  "title": "Response Get Wallet Transactions Wallets  Address  Transactions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/prepare": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Prepare Transaction",
+        "operationId": "prepare_transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionPrepareRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionPrepareResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions": {
+      "post": {
+        "tags": ["Transactions"],
+        "summary": "Submit Transaction",
+        "operationId": "submit_transaction",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransactionSubmitRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/{tx_id}": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get Transaction",
+        "operationId": "get_transaction",
+        "parameters": [
+          {
+            "name": "tx_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Tx Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/mempool": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get Mempool",
+        "operationId": "get_mempool",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMempoolResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Mempool Transactions Mempool Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/mempool/status": {
+      "get": {
+        "tags": ["Transactions"],
+        "summary": "Get Mempool Status",
+        "operationId": "get_mempool_status",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MempoolStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocks": {
+      "get": {
+        "tags": ["Blocks"],
+        "summary": "Get Blocks",
+        "operationId": "get_blocks",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlockResponse"
+                  },
+                  "title": "Response Get Blocks Blocks Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocks/latest": {
+      "get": {
+        "tags": ["Blocks"],
+        "summary": "Get Latest Block",
+        "operationId": "get_latest_block",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlockResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocks/{height}": {
+      "get": {
+        "tags": ["Blocks"],
+        "summary": "Get Block",
+        "operationId": "get_block",
+        "parameters": [
+          {
+            "name": "height",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Height"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlockDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocks/mining/start": {
+      "post": {
+        "tags": ["Blocks"],
+        "summary": "Start Mining",
+        "operationId": "start_mining",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlockMiningRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/verify": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Verify Admin",
+        "operationId": "verify_admin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminVerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdminTokenResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/init": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Init Blockchain",
+        "operationId": "init_blockchain",
+        "parameters": [
+          {
+            "name": "admin-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Admin-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminInitRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/config": {
+      "put": {
+        "tags": ["Admin"],
+        "summary": "Update Config",
+        "operationId": "update_config",
+        "parameters": [
+          {
+            "name": "admin-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Admin-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdminConfigRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/admin/reset": {
+      "post": {
+        "tags": ["Admin"],
+        "summary": "Reset Chain",
+        "operationId": "reset_chain",
+        "parameters": [
+          {
+            "name": "admin-token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Admin-Token"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/config": {
+      "get": {
+        "tags": ["Config"],
+        "summary": "Get Config",
+        "operationId": "get_config",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ConfigResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health Check",
+        "operationId": "health_check",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Health Check Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "Root",
+        "operationId": "root",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdminConfigRequest": {
+        "properties": {
+          "difficulty": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Difficulty"
+          },
+          "block_reward_coins": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Block Reward Coins"
+          },
+          "max_transactions_per_block": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max Transactions Per Block"
+          },
+          "units_per_coin": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Units Per Coin"
+          }
+        },
+        "type": "object",
+        "title": "AdminConfigRequest"
+      },
+      "AdminInitRequest": {
+        "properties": {
+          "miner_address": {
+            "type": "string",
+            "title": "Miner Address"
+          }
+        },
+        "type": "object",
+        "required": ["miner_address"],
+        "title": "AdminInitRequest"
+      },
+      "AdminTokenResponse": {
+        "properties": {
+          "session_token": {
+            "type": "string",
+            "title": "Session Token"
+          }
+        },
+        "type": "object",
+        "required": ["session_token"],
+        "title": "AdminTokenResponse"
+      },
+      "AdminVerifyRequest": {
+        "properties": {
+          "admin_password": {
+            "type": "string",
+            "title": "Admin Password"
+          }
+        },
+        "type": "object",
+        "required": ["admin_password"],
+        "title": "AdminVerifyRequest"
+      },
+      "BasicResponse": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": ["success"],
+        "title": "BasicResponse"
+      },
+      "BlockDetailResponse": {
+        "properties": {
+          "height": {
+            "type": "integer",
+            "title": "Height"
+          },
+          "hash": {
+            "type": "string",
+            "title": "Hash"
+          },
+          "previous_hash": {
+            "type": "string",
+            "title": "Previous Hash"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "tx_count": {
+            "type": "integer",
+            "title": "Tx Count"
+          },
+          "miner_address": {
+            "type": "string",
+            "title": "Miner Address"
+          },
+          "miner_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Miner Username"
+          },
+          "nonce": {
+            "type": "integer",
+            "title": "Nonce"
+          },
+          "merkle_root": {
+            "type": "string",
+            "title": "Merkle Root"
+          },
+          "transactions": {
+            "items": {
+              "$ref": "#/components/schemas/TransactionDetailResponse"
+            },
+            "type": "array",
+            "title": "Transactions"
+          }
+        },
+        "type": "object",
+        "required": [
+          "height",
+          "hash",
+          "previous_hash",
+          "timestamp",
+          "tx_count",
+          "miner_address",
+          "nonce",
+          "merkle_root",
+          "transactions"
+        ],
+        "title": "BlockDetailResponse"
+      },
+      "BlockMiningRequest": {
+        "properties": {
+          "miner_wallet_address": {
+            "type": "string",
+            "title": "Miner Wallet Address"
+          }
+        },
+        "type": "object",
+        "required": ["miner_wallet_address"],
+        "title": "BlockMiningRequest"
+      },
+      "BlockResponse": {
+        "properties": {
+          "height": {
+            "type": "integer",
+            "title": "Height"
+          },
+          "hash": {
+            "type": "string",
+            "title": "Hash"
+          },
+          "previous_hash": {
+            "type": "string",
+            "title": "Previous Hash"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "tx_count": {
+            "type": "integer",
+            "title": "Tx Count"
+          },
+          "miner_address": {
+            "type": "string",
+            "title": "Miner Address"
+          },
+          "miner_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Miner Username"
+          },
+          "nonce": {
+            "type": "integer",
+            "title": "Nonce"
+          },
+          "merkle_root": {
+            "type": "string",
+            "title": "Merkle Root"
+          }
+        },
+        "type": "object",
+        "required": [
+          "height",
+          "hash",
+          "previous_hash",
+          "timestamp",
+          "tx_count",
+          "miner_address",
+          "nonce",
+          "merkle_root"
+        ],
+        "title": "BlockResponse"
+      },
+      "ConfigResponse": {
+        "properties": {
+          "difficulty": {
+            "type": "integer",
+            "title": "Difficulty"
+          },
+          "block_reward_coins": {
+            "type": "integer",
+            "title": "Block Reward Coins"
+          },
+          "max_tx_per_block": {
+            "type": "integer",
+            "title": "Max Tx Per Block"
+          },
+          "units_per_coin": {
+            "type": "integer",
+            "title": "Units Per Coin"
+          },
+          "coin_name": {
+            "type": "string",
+            "title": "Coin Name"
+          },
+          "unit_name": {
+            "type": "string",
+            "title": "Unit Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "difficulty",
+          "block_reward_coins",
+          "max_tx_per_block",
+          "units_per_coin",
+          "coin_name",
+          "unit_name"
+        ],
+        "title": "ConfigResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MempoolStatusResponse": {
+        "properties": {
+          "mining_active": {
+            "type": "boolean",
+            "title": "Mining Active"
+          },
+          "miner_address": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Miner Address"
+          }
+        },
+        "type": "object",
+        "required": ["mining_active"],
+        "title": "MempoolStatusResponse"
+      },
+      "ResetRequest": {
+        "properties": {
+          "confirmation": {
+            "type": "string",
+            "title": "Confirmation"
+          },
+          "reset_profiles": {
+            "type": "boolean",
+            "title": "Reset Profiles"
+          }
+        },
+        "type": "object",
+        "required": ["confirmation", "reset_profiles"],
+        "title": "ResetRequest"
+      },
+      "TransactionDetailResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/TransactionInputDetail"
+            },
+            "type": "array",
+            "title": "Inputs"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/TransactionOutputDetail"
+            },
+            "type": "array",
+            "title": "Outputs"
+          },
+          "fee": {
+            "type": "integer",
+            "title": "Fee"
+          },
+          "block_height": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Block Height"
+          },
+          "is_coinbase": {
+            "type": "boolean",
+            "title": "Is Coinbase"
+          }
+        },
+        "type": "object",
+        "required": ["id", "timestamp", "inputs", "outputs", "fee", "is_coinbase"],
+        "title": "TransactionDetailResponse"
+      },
+      "TransactionInputDetail": {
+        "properties": {
+          "ref_tx_id": {
+            "type": "string",
+            "title": "Ref Tx Id"
+          },
+          "ref_output_index": {
+            "type": "integer",
+            "title": "Ref Output Index"
+          },
+          "signature": {
+            "type": "string",
+            "title": "Signature"
+          }
+        },
+        "type": "object",
+        "required": ["ref_tx_id", "ref_output_index", "signature"],
+        "title": "TransactionInputDetail"
+      },
+      "TransactionMempoolResponse": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "sender_address": {
+            "type": "string",
+            "title": "Sender Address"
+          },
+          "sender_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sender Username"
+          },
+          "recipient_address": {
+            "type": "string",
+            "title": "Recipient Address"
+          },
+          "recipient_username": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Recipient Username"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          },
+          "fee": {
+            "type": "integer",
+            "title": "Fee"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Timestamp"
+          }
+        },
+        "type": "object",
+        "required": ["id", "sender_address", "recipient_address", "amount", "fee", "timestamp"],
+        "title": "TransactionMempoolResponse"
+      },
+      "TransactionOutputDetail": {
+        "properties": {
+          "recipient": {
+            "type": "string",
+            "title": "Recipient"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": ["recipient", "amount"],
+        "title": "TransactionOutputDetail"
+      },
+      "TransactionPrepareRequest": {
+        "properties": {
+          "sender_address": {
+            "type": "string",
+            "title": "Sender Address"
+          },
+          "recipient_address": {
+            "type": "string",
+            "title": "Recipient Address"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          },
+          "fee": {
+            "type": "integer",
+            "title": "Fee",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": ["sender_address", "recipient_address", "amount"],
+        "title": "TransactionPrepareRequest"
+      },
+      "TransactionPrepareResponse": {
+        "properties": {
+          "tx_id": {
+            "type": "string",
+            "title": "Tx Id"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/TxInputPayload"
+            },
+            "type": "array",
+            "title": "Inputs"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/TxOutputPayload"
+            },
+            "type": "array",
+            "title": "Outputs"
+          },
+          "fee": {
+            "type": "integer",
+            "title": "Fee"
+          }
+        },
+        "type": "object",
+        "required": ["tx_id", "inputs", "outputs", "fee"],
+        "title": "TransactionPrepareResponse"
+      },
+      "TransactionSubmitRequest": {
+        "properties": {
+          "tx_id": {
+            "type": "string",
+            "title": "Tx Id"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/TxInputPayload"
+            },
+            "type": "array",
+            "title": "Inputs"
+          },
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/TxOutputPayload"
+            },
+            "type": "array",
+            "title": "Outputs"
+          },
+          "fee": {
+            "type": "integer",
+            "title": "Fee"
+          }
+        },
+        "type": "object",
+        "required": ["tx_id", "inputs", "outputs", "fee"],
+        "title": "TransactionSubmitRequest"
+      },
+      "TxInputPayload": {
+        "properties": {
+          "ref_tx_id": {
+            "type": "string",
+            "title": "Ref Tx Id"
+          },
+          "ref_output_index": {
+            "type": "integer",
+            "title": "Ref Output Index"
+          },
+          "message_to_sign": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message To Sign"
+          },
+          "signature": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Signature"
+          }
+        },
+        "type": "object",
+        "required": ["ref_tx_id", "ref_output_index"],
+        "title": "TxInputPayload"
+      },
+      "TxOutputPayload": {
+        "properties": {
+          "recipient": {
+            "type": "string",
+            "title": "Recipient"
+          },
+          "amount": {
+            "type": "integer",
+            "title": "Amount"
+          }
+        },
+        "type": "object",
+        "required": ["recipient", "amount"],
+        "title": "TxOutputPayload"
+      },
+      "UserAuthenticateRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "UserAuthenticateRequest"
+      },
+      "UserCreateRequest": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": ["username", "password"],
+        "title": "UserCreateRequest"
+      },
+      "UserResponse": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "username": {
+            "type": "string",
+            "title": "Username"
+          }
+        },
+        "type": "object",
+        "required": ["user_id", "username"],
+        "title": "UserResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      },
+      "WalletCreateRequest": {
+        "properties": {
+          "user_id": {
+            "type": "string",
+            "title": "User Id"
+          },
+          "address": {
+            "type": "string",
+            "title": "Address"
+          },
+          "public_key": {
+            "type": "string",
+            "title": "Public Key"
+          },
+          "encrypted_private_key": {
+            "type": "string",
+            "title": "Encrypted Private Key"
+          }
+        },
+        "type": "object",
+        "required": ["user_id", "address", "public_key", "encrypted_private_key"],
+        "title": "WalletCreateRequest"
+      }
+    }
+  }
+}
