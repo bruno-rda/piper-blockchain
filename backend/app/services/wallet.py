@@ -1,0 +1,38 @@
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.sql import func, select
+
+from app.models.orm import Transaction, TxOutput, Wallet
+
+
+class WalletService:
+    def __init__(self, db: AsyncSession):
+        self.db = db
+
+    async def create_wallet(
+        self, user_id: str, address: str, public_key: str, encrypted_private_key: str
+    ) -> str:
+        wallet = Wallet(
+            address=address,
+            owner_id=user_id,
+            public_key=public_key,
+            encrypted_private_key=encrypted_private_key,
+        )
+        self.db.add(wallet)
+        await self.db.commit()
+        return wallet.address
+
+    async def get_balance(self, address: str) -> int:
+        result = await self.db.execute(
+            select(func.sum(TxOutput.amount)).filter(
+                TxOutput.recipient_address == address, TxOutput.is_spent == False
+            )
+        )
+        return result.scalar() or 0
+
+    async def get_transactions(self, address: str) -> list[Transaction]:
+        result = await self.db.execute(
+            select(Transaction)
+            .join(TxOutput, Transaction.id == TxOutput.transaction_id)
+            .filter(TxOutput.recipient_address == address)
+        )
+        return result.scalars().all()
