@@ -45,6 +45,17 @@ export function Modal({ open, onClose, children, preventClose = false, maxWidth 
 
   if (!open) return null;
 
+  const maxWidthClass = {
+    sm: 'max-w-sm',
+    md: 'max-w-md',
+    lg: 'max-w-lg',
+    xl: 'max-w-xl',
+    '2xl': 'max-w-2xl',
+    '3xl': 'max-w-3xl',
+    '4xl': 'max-w-4xl',
+    '5xl': 'max-w-5xl',
+  }[maxWidth as string] || maxWidth;
+
   return (
     <div
       className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
@@ -55,7 +66,7 @@ export function Modal({ open, onClose, children, preventClose = false, maxWidth 
       <div
         ref={panelRef}
         tabIndex={-1}
-        className={`bg-[#202020] rounded-[2rem] p-8 max-w-${maxWidth} w-full outline-none shadow-[0_20px_50px_rgba(0,0,0,0.6)]`}
+        className={`bg-[#202020] rounded-[2rem] p-8 w-full outline-none shadow-[0_20px_50px_rgba(0,0,0,0.6)] ${maxWidthClass}`}
         onClick={(e) => e.stopPropagation()}
       >
         {children}
