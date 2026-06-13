@@ -1,4 +1,5 @@
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 from sqlalchemy.sql import func, select
 
 from app.models.orm import Transaction, TxOutput, Wallet
@@ -33,6 +34,26 @@ class WalletService:
         result = await self.db.execute(
             select(Transaction)
             .join(TxOutput, Transaction.id == TxOutput.transaction_id)
+            .options(
+                selectinload(Transaction.inputs),
+                selectinload(Transaction.outputs),
+            )
             .filter(TxOutput.recipient_address == address)
         )
         return result.scalars().all()
+
+    async def get_all_wallet_balances(self) -> list[dict]:
+        result = await self.db.execute(select(Wallet).options(selectinload(Wallet.owner)))
+        wallets = result.scalars().all()
+
+        balances = []
+        for wallet in wallets:
+            balance = await self.get_balance(wallet.address)
+            transactions = await self.get_transactions(wallet.address)
+            balances.append({
+                "username": wallet.owner.username,
+                "wallet_address": wallet.address,
+                "balance": balance,
+                "transaction_count": len(transactions)
+            })
+        return balances

@@ -76,6 +76,13 @@ class BalanceResponse(BaseModel):
     balance: int
 
 
+class WalletBalanceResponse(BaseModel):
+    username: str
+    wallet_address: str
+    balance: int
+    transaction_count: int
+
+
 class TransactionOutputDetail(BaseModel):
     recipient: str
     amount: int

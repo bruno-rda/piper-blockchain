@@ -1,115 +1,200 @@
 @import 'tailwindcss';
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+/* ================================================================
+   Piper Design System — CSS Custom Properties
+   All colors in the app reference these tokens exclusively.
+   No Tailwind default color classes allowed.
+   ================================================================ */
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+@theme {
+  /* Surface hierarchy — darkest to lightest */
+  --color-surface-void:    #0c0c0c;
+  --color-surface-base:    #141414;
+  --color-surface-raised:  #262626;
+  --color-surface-overlay: #333333;
+  --color-surface-subtle:  #404040;
+  --color-surface-border:  #525252;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  /* Brand accent — sleek amber */
+  --color-accent:          #f59e0b;
+  --color-accent-dim:      #d97706;
+  --color-accent-ghost:    rgba(245, 158, 11, 0.1);
+  --color-accent-border:   rgba(245, 158, 11, 0.25);
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  /* Semantic colors */
+  --color-success:         #22c55e;
+  --color-success-ghost:   rgba(34, 197, 94, 0.1);
+  --color-warning:         #f59e0b;
+  --color-warning-ghost:   rgba(245, 158, 11, 0.1);
+  --color-danger:          #ef4444;
+  --color-danger-ghost:    rgba(239, 68, 68, 0.1);
+
+  /* Text hierarchy */
+  --color-text-primary:    #fafafa;
+  --color-text-secondary:  #a3a3a3;
+  --color-text-tertiary:   #737373;
+  --color-text-accent:     #f59e0b;
+
+  /* Font stacks */
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+/* ================================================================
+   Base Styles
+   ================================================================ */
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+#root {
+  min-height: 100vh;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
+/* ================================================================
+   Grid Texture Background
+   Applied to the main content area via ::before pseudo-element
+   ================================================================ */
 
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+.page-background {
+  position: relative;
+  background-color: var(--color-surface-base);
 }
 
-h2 {
+/* Explicit Background Utilities */
+.bg-surface-void { background-color: var(--color-surface-void); }
+.bg-surface-base { background-color: var(--color-surface-base); }
+.bg-surface-subtle { background-color: var(--color-surface-subtle); }
+.bg-accent { background-color: var(--color-accent); }
+.text-text-primary { color: var(--color-text-primary); }
+.text-text-secondary { color: var(--color-text-secondary); }
+
+/* ================================================================
+   Typography Utility Classes
+   ================================================================ */
+
+.text-display {
   font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
 }
 
-p {
-  margin: 0;
+.text-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.3;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+.text-body {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.text-small {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-tertiary);
+  line-height: 1.4;
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--color-text-secondary);
+}
+
+.text-mono-sm {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--color-text-tertiary);
+}
+
+/* ================================================================
+   Scrollbar Styling
+   ================================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* ================================================================
+   Mining Pulse Animation
+   ================================================================ */
+
+@keyframes mining-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-mining-pulse {
+  animation: mining-pulse 1.5s ease-in-out infinite;
+}
+
+/* ================================================================
+   Block Detail Slide Transition
+   ================================================================ */
+
+.block-detail-enter {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease-out;
+}
+
+.block-detail-enter.open {
+  max-height: 600px;
+}
+
+/* ================================================================
+   Skeleton Loading
+   ================================================================ */
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.3; }
+}
+
+.skeleton {
+  background-color: var(--color-surface-subtle);
+  border-radius: 6px;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
 }

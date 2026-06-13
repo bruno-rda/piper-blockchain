@@ -7,7 +7,9 @@
   "paths": {
     "/users": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Create User",
         "operationId": "create_user",
         "requestBody": {
@@ -46,7 +48,9 @@
     },
     "/users/authenticate": {
       "post": {
-        "tags": ["Users"],
+        "tags": [
+          "Users"
+        ],
         "summary": "Authenticate User",
         "operationId": "authenticate_user",
         "requestBody": {
@@ -83,9 +87,36 @@
         }
       }
     },
+    "/wallets/balances/all": {
+      "get": {
+        "tags": [
+          "Wallets"
+        ],
+        "summary": "Get All Balances",
+        "operationId": "get_all_balances",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/WalletBalanceResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get All Balances Wallets Balances All Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/wallets": {
       "post": {
-        "tags": ["Wallets"],
+        "tags": [
+          "Wallets"
+        ],
         "summary": "Create Wallet",
         "operationId": "create_wallet",
         "requestBody": {
@@ -124,7 +155,9 @@
     },
     "/wallets/{address}/balance": {
       "get": {
-        "tags": ["Wallets"],
+        "tags": [
+          "Wallets"
+        ],
         "summary": "Get Wallet Balance",
         "operationId": "get_wallet_balance",
         "parameters": [
@@ -165,7 +198,9 @@
     },
     "/wallets/{address}/transactions": {
       "get": {
-        "tags": ["Wallets"],
+        "tags": [
+          "Wallets"
+        ],
         "summary": "Get Wallet Transactions",
         "operationId": "get_wallet_transactions",
         "parameters": [
@@ -209,7 +244,9 @@
     },
     "/transactions/prepare": {
       "post": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Prepare Transaction",
         "operationId": "prepare_transaction",
         "requestBody": {
@@ -248,7 +285,9 @@
     },
     "/transactions": {
       "post": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Submit Transaction",
         "operationId": "submit_transaction",
         "requestBody": {
@@ -285,9 +324,57 @@
         }
       }
     },
+    "/transactions/mempool": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get Mempool",
+        "operationId": "get_mempool",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TransactionMempoolResponse"
+                  },
+                  "type": "array",
+                  "title": "Response Get Mempool Transactions Mempool Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/transactions/mempool/status": {
+      "get": {
+        "tags": [
+          "Transactions"
+        ],
+        "summary": "Get Mempool Status",
+        "operationId": "get_mempool_status",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MempoolStatusResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/transactions/{tx_id}": {
       "get": {
-        "tags": ["Transactions"],
+        "tags": [
+          "Transactions"
+        ],
         "summary": "Get Transaction",
         "operationId": "get_transaction",
         "parameters": [
@@ -325,51 +412,11 @@
         }
       }
     },
-    "/transactions/mempool": {
-      "get": {
-        "tags": ["Transactions"],
-        "summary": "Get Mempool",
-        "operationId": "get_mempool",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "items": {
-                    "$ref": "#/components/schemas/TransactionMempoolResponse"
-                  },
-                  "type": "array",
-                  "title": "Response Get Mempool Transactions Mempool Get"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/transactions/mempool/status": {
-      "get": {
-        "tags": ["Transactions"],
-        "summary": "Get Mempool Status",
-        "operationId": "get_mempool_status",
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MempoolStatusResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/blocks": {
       "get": {
-        "tags": ["Blocks"],
+        "tags": [
+          "Blocks"
+        ],
         "summary": "Get Blocks",
         "operationId": "get_blocks",
         "parameters": [
@@ -424,7 +471,9 @@
     },
     "/blocks/latest": {
       "get": {
-        "tags": ["Blocks"],
+        "tags": [
+          "Blocks"
+        ],
         "summary": "Get Latest Block",
         "operationId": "get_latest_block",
         "responses": {
@@ -443,7 +492,9 @@
     },
     "/blocks/{height}": {
       "get": {
-        "tags": ["Blocks"],
+        "tags": [
+          "Blocks"
+        ],
         "summary": "Get Block",
         "operationId": "get_block",
         "parameters": [
@@ -483,7 +534,9 @@
     },
     "/blocks/mining/start": {
       "post": {
-        "tags": ["Blocks"],
+        "tags": [
+          "Blocks"
+        ],
         "summary": "Start Mining",
         "operationId": "start_mining",
         "requestBody": {
@@ -520,7 +573,9 @@
     },
     "/admin/verify": {
       "post": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Verify Admin",
         "operationId": "verify_admin",
         "requestBody": {
@@ -559,7 +614,9 @@
     },
     "/admin/init": {
       "post": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Init Blockchain",
         "operationId": "init_blockchain",
         "parameters": [
@@ -609,7 +666,9 @@
     },
     "/admin/config": {
       "put": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Update Config",
         "operationId": "update_config",
         "parameters": [
@@ -659,7 +718,9 @@
     },
     "/admin/reset": {
       "post": {
-        "tags": ["Admin"],
+        "tags": [
+          "Admin"
+        ],
         "summary": "Reset Chain",
         "operationId": "reset_chain",
         "parameters": [
@@ -709,7 +770,9 @@
     },
     "/config": {
       "get": {
-        "tags": ["Config"],
+        "tags": [
+          "Config"
+        ],
         "summary": "Get Config",
         "operationId": "get_config",
         "responses": {
@@ -825,7 +888,9 @@
           }
         },
         "type": "object",
-        "required": ["miner_address"],
+        "required": [
+          "miner_address"
+        ],
         "title": "AdminInitRequest"
       },
       "AdminTokenResponse": {
@@ -836,7 +901,9 @@
           }
         },
         "type": "object",
-        "required": ["session_token"],
+        "required": [
+          "session_token"
+        ],
         "title": "AdminTokenResponse"
       },
       "AdminVerifyRequest": {
@@ -847,7 +914,9 @@
           }
         },
         "type": "object",
-        "required": ["admin_password"],
+        "required": [
+          "admin_password"
+        ],
         "title": "AdminVerifyRequest"
       },
       "BasicResponse": {
@@ -869,7 +938,9 @@
           }
         },
         "type": "object",
-        "required": ["success"],
+        "required": [
+          "success"
+        ],
         "title": "BasicResponse"
       },
       "BlockDetailResponse": {
@@ -948,7 +1019,9 @@
           }
         },
         "type": "object",
-        "required": ["miner_wallet_address"],
+        "required": [
+          "miner_wallet_address"
+        ],
         "title": "BlockMiningRequest"
       },
       "BlockResponse": {
@@ -1081,7 +1154,9 @@
           }
         },
         "type": "object",
-        "required": ["mining_active"],
+        "required": [
+          "mining_active"
+        ],
         "title": "MempoolStatusResponse"
       },
       "ResetRequest": {
@@ -1096,7 +1171,10 @@
           }
         },
         "type": "object",
-        "required": ["confirmation", "reset_profiles"],
+        "required": [
+          "confirmation",
+          "reset_profiles"
+        ],
         "title": "ResetRequest"
       },
       "TransactionDetailResponse": {
@@ -1145,7 +1223,14 @@
           }
         },
         "type": "object",
-        "required": ["id", "timestamp", "inputs", "outputs", "fee", "is_coinbase"],
+        "required": [
+          "id",
+          "timestamp",
+          "inputs",
+          "outputs",
+          "fee",
+          "is_coinbase"
+        ],
         "title": "TransactionDetailResponse"
       },
       "TransactionInputDetail": {
@@ -1164,7 +1249,11 @@
           }
         },
         "type": "object",
-        "required": ["ref_tx_id", "ref_output_index", "signature"],
+        "required": [
+          "ref_tx_id",
+          "ref_output_index",
+          "signature"
+        ],
         "title": "TransactionInputDetail"
       },
       "TransactionMempoolResponse": {
@@ -1188,21 +1277,6 @@
             ],
             "title": "Sender Username"
           },
-          "recipient_address": {
-            "type": "string",
-            "title": "Recipient Address"
-          },
-          "recipient_username": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Recipient Username"
-          },
           "amount": {
             "type": "integer",
             "title": "Amount"
@@ -1218,7 +1292,13 @@
           }
         },
         "type": "object",
-        "required": ["id", "sender_address", "recipient_address", "amount", "fee", "timestamp"],
+        "required": [
+          "id",
+          "sender_address",
+          "amount",
+          "fee",
+          "timestamp"
+        ],
         "title": "TransactionMempoolResponse"
       },
       "TransactionOutputDetail": {
@@ -1233,7 +1313,10 @@
           }
         },
         "type": "object",
-        "required": ["recipient", "amount"],
+        "required": [
+          "recipient",
+          "amount"
+        ],
         "title": "TransactionOutputDetail"
       },
       "TransactionPrepareRequest": {
@@ -1242,13 +1325,12 @@
             "type": "string",
             "title": "Sender Address"
           },
-          "recipient_address": {
-            "type": "string",
-            "title": "Recipient Address"
-          },
-          "amount": {
-            "type": "integer",
-            "title": "Amount"
+          "outputs": {
+            "items": {
+              "$ref": "#/components/schemas/TxOutputPayload"
+            },
+            "type": "array",
+            "title": "Outputs"
           },
           "fee": {
             "type": "integer",
@@ -1257,7 +1339,10 @@
           }
         },
         "type": "object",
-        "required": ["sender_address", "recipient_address", "amount"],
+        "required": [
+          "sender_address",
+          "outputs"
+        ],
         "title": "TransactionPrepareRequest"
       },
       "TransactionPrepareResponse": {
@@ -1286,7 +1371,12 @@
           }
         },
         "type": "object",
-        "required": ["tx_id", "inputs", "outputs", "fee"],
+        "required": [
+          "tx_id",
+          "inputs",
+          "outputs",
+          "fee"
+        ],
         "title": "TransactionPrepareResponse"
       },
       "TransactionSubmitRequest": {
@@ -1315,7 +1405,12 @@
           }
         },
         "type": "object",
-        "required": ["tx_id", "inputs", "outputs", "fee"],
+        "required": [
+          "tx_id",
+          "inputs",
+          "outputs",
+          "fee"
+        ],
         "title": "TransactionSubmitRequest"
       },
       "TxInputPayload": {
@@ -1352,7 +1447,10 @@
           }
         },
         "type": "object",
-        "required": ["ref_tx_id", "ref_output_index"],
+        "required": [
+          "ref_tx_id",
+          "ref_output_index"
+        ],
         "title": "TxInputPayload"
       },
       "TxOutputPayload": {
@@ -1367,7 +1465,10 @@
           }
         },
         "type": "object",
-        "required": ["recipient", "amount"],
+        "required": [
+          "recipient",
+          "amount"
+        ],
         "title": "TxOutputPayload"
       },
       "UserAuthenticateRequest": {
@@ -1382,7 +1483,10 @@
           }
         },
         "type": "object",
-        "required": ["username", "password"],
+        "required": [
+          "username",
+          "password"
+        ],
         "title": "UserAuthenticateRequest"
       },
       "UserCreateRequest": {
@@ -1397,7 +1501,10 @@
           }
         },
         "type": "object",
-        "required": ["username", "password"],
+        "required": [
+          "username",
+          "password"
+        ],
         "title": "UserCreateRequest"
       },
       "UserResponse": {
@@ -1412,7 +1519,10 @@
           }
         },
         "type": "object",
-        "required": ["user_id", "username"],
+        "required": [
+          "user_id",
+          "username"
+        ],
         "title": "UserResponse"
       },
       "ValidationError": {
@@ -1448,8 +1558,40 @@
           }
         },
         "type": "object",
-        "required": ["loc", "msg", "type"],
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
         "title": "ValidationError"
+      },
+      "WalletBalanceResponse": {
+        "properties": {
+          "username": {
+            "type": "string",
+            "title": "Username"
+          },
+          "wallet_address": {
+            "type": "string",
+            "title": "Wallet Address"
+          },
+          "balance": {
+            "type": "integer",
+            "title": "Balance"
+          },
+          "transaction_count": {
+            "type": "integer",
+            "title": "Transaction Count"
+          }
+        },
+        "type": "object",
+        "required": [
+          "username",
+          "wallet_address",
+          "balance",
+          "transaction_count"
+        ],
+        "title": "WalletBalanceResponse"
       },
       "WalletCreateRequest": {
         "properties": {
@@ -1471,7 +1613,12 @@
           }
         },
         "type": "object",
-        "required": ["user_id", "address", "public_key", "encrypted_private_key"],
+        "required": [
+          "user_id",
+          "address",
+          "public_key",
+          "encrypted_private_key"
+        ],
         "title": "WalletCreateRequest"
       }
     }

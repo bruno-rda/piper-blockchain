@@ -7,10 +7,16 @@ from app.models.schemas import (
     TransactionInputDetail,
     TransactionOutputDetail,
     WalletCreateRequest,
+    WalletBalanceResponse,
 )
 from app.services.wallet import WalletService
 
 router = APIRouter(prefix="/wallets", tags=["Wallets"])
+
+
+@router.get("/balances/all", response_model=list[WalletBalanceResponse])
+async def get_all_balances(wallet_service: WalletService = Depends(get_wallet_service)):
+    return await wallet_service.get_all_wallet_balances()
 
 
 @router.post("", response_model=BasicResponse)
