@@ -1,6 +1,6 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
-from sqlalchemy.sql import select
+from sqlalchemy.sql import exists, select
 
 from app.crypto import generate_tx_hash, verify_ecdsa_signature
 from app.models.orm import Transaction, TxInput, TxOutput, Wallet
@@ -18,9 +18,19 @@ class TransactionService:
         if amount <= 0:
             raise ValueError("Amount must be greater than 0.")
 
+        subq = select(1).select_from(TxInput).join(
+            Transaction, TxInput.transaction_id == Transaction.id
+        ).filter(
+            TxInput.referenced_tx_id == TxOutput.transaction_id,
+            TxInput.referenced_output_index == TxOutput.output_index,
+            Transaction.block_height.is_(None)
+        )
+
         result = await self.db.execute(
             select(TxOutput).filter(
-                TxOutput.recipient_address == sender_address, TxOutput.is_spent == False
+                TxOutput.recipient_address == sender_address,
+                TxOutput.is_spent == False,
+                ~exists(subq)
             )
         )
         utxos = result.scalars().all()
@@ -83,6 +93,17 @@ class TransactionService:
 
             if not utxo or utxo.is_spent:
                 raise ValueError("UTXO invalid or spent.")
+
+            subq = select(1).select_from(TxInput).join(
+                Transaction, TxInput.transaction_id == Transaction.id
+            ).filter(
+                TxInput.referenced_tx_id == inp.ref_tx_id,
+                TxInput.referenced_output_index == inp.ref_output_index,
+                Transaction.block_height.is_(None)
+            )
+            is_pending_result = await self.db.execute(select(exists(subq)))
+            if is_pending_result.scalar():
+                raise ValueError("UTXO is pending spend in mempool.")
 
             # Verify signature was signed by the owner of the UTXO
             wallet_result = await self.db.execute(

@@ -9,7 +9,6 @@ import { getBlocks, getBlock, getTransaction } from '@/client';
 import type { BlockResponse, BlockDetailResponse, TransactionDetailResponse } from '@/client';
 
 export function BlockchainPage() {
-  const { format } = useCoins();
   const { addToast } = useToast();
 
   const [blocks, setBlocks] = useState<BlockResponse[]>([]);

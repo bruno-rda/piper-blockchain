@@ -87,7 +87,7 @@ export async function encryptPrivateKey(privateKeyHex: string, password: string)
     ['encrypt'],
   )
 
-  const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, aesKey, hexToBytes(privateKeyHex))
+  const ciphertext = await crypto.subtle.encrypt({ name: 'AES-GCM', iv: iv as any }, aesKey, hexToBytes(privateKeyHex) as any)
 
   return {
     salt: bytesToHex(salt),
@@ -104,14 +104,14 @@ export async function decryptPrivateKey(encrypted: { salt: string; iv: string; c
 
   const keyMaterial = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey'])
   const aesKey = await crypto.subtle.deriveKey(
-    { name: 'PBKDF2', salt, iterations: 100_000, hash: 'SHA-256' },
+    { name: 'PBKDF2', salt: salt as any, iterations: 100_000, hash: 'SHA-256' },
     keyMaterial,
     { name: 'AES-GCM', length: 256 },
     false,
     ['decrypt'],
   )
 
-  const plaintext = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, aesKey, ciphertext)
+  const plaintext = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: iv as any }, aesKey, ciphertext as any)
   return bytesToHex(new Uint8Array(plaintext))
 }
 

@@ -203,16 +203,14 @@ function WalletDetailModal({
   const [copied, setCopied] = useState(false);
   const [balance, setBalance] = useState<number | null>(null);
   const { format } = useCoins();
-
   useEffect(() => {
     if (open) {
       getWalletBalance({ path: { address: profile.address } })
-        .then((res) => {
+        .then((res: any) => {
           if (res.error) {
             setBalance(0);
           } else if (res.data !== undefined) {
-            // Check if it's a raw number or an object with a balance field
-            const val = typeof res.data === 'number' ? res.data : (res.data as any).balance;
+            const val = typeof res.data === 'number' ? res.data : res.data.balance;
             setBalance(val !== undefined ? val : 0);
           } else {
             setBalance(0);

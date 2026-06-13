@@ -137,25 +137,4 @@ class BlockchainConfig(Base):
     unit_name = Column(String, nullable=False)
 
 
-@event.listens_for(TxInput, "after_insert")
-def mark_output_as_spent(mapper, connection, target):
-    connection.execute(
-        TxOutput.__table__.update()
-        .where(
-            (TxOutput.transaction_id == target.referenced_tx_id)
-            & (TxOutput.output_index == target.referenced_output_index)
-        )
-        .values(is_spent=True)
-    )
 
-
-@event.listens_for(TxInput, "after_delete")
-def unspend_output(mapper, connection, target):
-    connection.execute(
-        TxOutput.__table__.update()
-        .where(
-            (TxOutput.transaction_id == target.referenced_tx_id)
-            & (TxOutput.output_index == target.referenced_output_index)
-        )
-        .values(is_spent=False)
-    )

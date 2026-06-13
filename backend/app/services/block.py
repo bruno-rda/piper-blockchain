@@ -92,6 +92,7 @@ class BlockService:
         # Get pending transactions
         tx_result = await self.db.execute(
             select(Transaction)
+            .options(selectinload(Transaction.inputs))
             .filter(Transaction.block_height == None)
             .order_by(
                 # Get highest fee transactions first
@@ -209,6 +210,16 @@ class BlockService:
                     yield event
                     if event.get("done"):
                         # persist block
+                        for tx in block.transactions:
+                            for inp in tx.inputs:
+                                await self.db.execute(
+                                    TxOutput.__table__.update()
+                                    .where(
+                                        (TxOutput.transaction_id == inp.referenced_tx_id) &
+                                        (TxOutput.output_index == inp.referenced_output_index)
+                                    )
+                                    .values(is_spent=True)
+                                )
                         self.db.add(block)
                         await self.db.commit()
                         break

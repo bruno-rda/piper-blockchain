@@ -24,8 +24,12 @@ class WalletService:
 
     async def get_balance(self, address: str) -> int:
         result = await self.db.execute(
-            select(func.sum(TxOutput.amount)).filter(
-                TxOutput.recipient_address == address, TxOutput.is_spent == False
+            select(func.sum(TxOutput.amount))
+            .join(Transaction, TxOutput.transaction_id == Transaction.id)
+            .filter(
+                TxOutput.recipient_address == address,
+                TxOutput.is_spent == False,
+                Transaction.block_height.is_not(None)
             )
         )
         return result.scalar() or 0

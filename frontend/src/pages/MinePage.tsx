@@ -1,15 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { ArrowUp } from 'lucide-react';
 import { useProfiles } from '@/contexts/ProfileContext';
-import { useCoins } from '@/hooks/useCoins';
-import { TruncatedAddress } from '@/components/TruncatedAddress';
 import { TransactionTable } from '@/components/TransactionTable';
 import { getMempool, getMempoolStatus } from '@/client';
 import type { TransactionMempoolResponse, MempoolStatusResponse } from '@/client';
 
 export function MinePage() {
   const { profiles, activeProfile } = useProfiles();
-  const { format } = useCoins();
 
   const [minerAddress, setMinerAddress] = useState(activeProfile?.address ?? '');
 
@@ -201,13 +197,6 @@ export function MinePage() {
       if (elapsedIntervalRef.current) clearInterval(elapsedIntervalRef.current);
       fetchMempool();
     }
-  };
-
-  const relativeTime = (timestamp: string) => {
-    const diff = Math.floor((Date.now() - new Date(timestamp).getTime()) / 1000);
-    if (diff < 60) return `${diff}s ago`;
-    if (diff < 3600) return `${Math.floor(diff / 60)} min ago`;
-    return `${Math.floor(diff / 3600)}h ago`;
   };
 
   return (

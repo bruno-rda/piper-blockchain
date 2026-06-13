@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Lock, Unlock, Settings } from 'lucide-react';
 import { useConfig } from '@/contexts/ConfigContext';
-import { useCoins } from '@/hooks/useCoins';
+
 import { useProfiles } from '@/contexts/ProfileContext';
 import { useToast } from '@/contexts/ToastContext';
 import { AddressSelector } from '@/components/AddressSelector';
@@ -9,7 +9,6 @@ import { verifyAdmin, initBlockchain, updateConfig, resetChain } from '@/client'
 
 export function ConfigPage() {
   const { config, refetchConfig } = useConfig();
-  const { format } = useCoins();
   const { activeProfile } = useProfiles();
   const { addToast } = useToast();
 

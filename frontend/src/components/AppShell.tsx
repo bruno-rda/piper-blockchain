@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { Users, ArrowUpRight, Cpu, Blocks, Settings } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -11,7 +11,6 @@ const NAV_ITEMS = [
 ] as const;
 
 export function AppShell() {
-  const location = useLocation();
 
   return (
     <div className="flex min-h-screen">
