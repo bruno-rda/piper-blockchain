@@ -3,11 +3,12 @@ import { useToast } from '@/contexts/ToastContext';
 import { TruncatedAddress } from '@/components/TruncatedAddress';
 import { Copy, Check, RefreshCw } from 'lucide-react';
 import { client } from '@/client/client.gen'; // Use client directly if needed
-import { getWalletTransactions } from '@/client';
+import { getWalletTransactions, getTransaction } from '@/client';
 import type { WalletBalanceResponse, TransactionDetailResponse } from '@/client/types.gen';
 import { useCoins } from '@/hooks/useCoins';
 import { Modal } from '@/components/Modal';
 import { TransactionTable } from '@/components/TransactionTable';
+import { TransactionDetailView } from '@/components/TransactionDetailView';
 
 export function BalancesPage() {
   const { addToast } = useToast();
@@ -23,6 +24,10 @@ export function BalancesPage() {
   const [walletTransactions, setWalletTransactions] = useState<TransactionDetailResponse[]>([]);
   const [loadingTransactions, setLoadingTransactions] = useState(false);
   const [transactionsModalOpen, setTransactionsModalOpen] = useState(false);
+
+  // Transaction detail modal
+  const [txDetail, setTxDetail] = useState<TransactionDetailResponse | null>(null);
+  const [txModalOpen, setTxModalOpen] = useState(false);
 
   const fetchBalances = async (isRefresh = false) => {
     if (isRefresh) setRefreshing(true);
@@ -75,6 +80,18 @@ export function BalancesPage() {
       addToast('Failed to load transactions for wallet', 'error');
     } finally {
       setLoadingTransactions(false);
+    }
+  };
+
+  const handleViewTransaction = async (txId: string) => {
+    try {
+      const res = await getTransaction({ path: { tx_id: txId } });
+      if (res.data) {
+        setTxDetail(res.data);
+        setTxModalOpen(true);
+      }
+    } catch {
+      addToast('Failed to load transaction', 'error');
     }
   };
 
@@ -208,11 +225,17 @@ export function BalancesPage() {
                 <TransactionTable
                   variant="block"
                   transactions={walletTransactions}
+                  onRowClick={handleViewTransaction}
                 />
               </div>
             )}
           </div>
         )}
+      </Modal>
+
+      {/* Transaction Detail Modal */}
+      <Modal open={txModalOpen} onClose={() => setTxModalOpen(false)}>
+        {txDetail && <TransactionDetailView tx={txDetail} />}
       </Modal>
     </div>
   );
