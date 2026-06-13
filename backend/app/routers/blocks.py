@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.responses import StreamingResponse
+import json
 
 from app.deps import get_block_service
 from app.models.schemas import (
@@ -111,6 +112,6 @@ async def start_mining(
 
     async def event_stream():
         async for event in event_generator:
-            yield f"data: {event}\n\n"
+            yield f"data: {json.dumps(event)}\n\n"
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")

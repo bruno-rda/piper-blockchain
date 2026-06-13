@@ -152,11 +152,6 @@ export function MinePage() {
             try {
               const event = JSON.parse(jsonStr);
 
-              setLogLines((prev) => {
-                const next = [...prev, jsonStr];
-                return next.length > 100 ? next.slice(-100) : next;
-              });
-
               if (event.type === 'progress' || event.nonce !== undefined) {
                 const currentNonce = event.nonce ?? 0;
                 setNonce(currentNonce);
@@ -164,14 +159,27 @@ export function MinePage() {
                 if (elapsedSecs > 0) {
                   setHashRate(Math.round(currentNonce / elapsedSecs));
                 }
+                
+                if (!event.done && event.hash) {
+                  setLogLines((prev) => {
+                    const next = [...prev, `Hashing... Current hash: ${event.hash}`];
+                    return next.length > 100 ? next.slice(-100) : next;
+                  });
+                }
               }
 
-              if (event.type === 'result' || event.block_hash || event.height !== undefined) {
+              if (event.type === 'result' || event.done || event.block_hash || event.height !== undefined) {
                 if (event.block_hash || event.hash) {
                   setMiningResult({
                     height: event.height ?? event.block_height ?? 0,
                     hash: event.block_hash ?? event.hash ?? '',
                   });
+                  if (event.done || event.type === 'result') {
+                    setLogLines((prev) => {
+                      const next = [...prev, `Success! Block mined with hash: ${event.block_hash ?? event.hash}`];
+                      return next.length > 100 ? next.slice(-100) : next;
+                    });
+                  }
                 }
               }
 
