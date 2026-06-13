@@ -108,7 +108,7 @@ export function MinePage() {
       const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
       const response = await fetch(`${baseUrl}/blocks/mining/start`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
         body: JSON.stringify({ miner_wallet_address: minerAddress }),
         signal: controller.signal,
       });

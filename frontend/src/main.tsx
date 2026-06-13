@@ -7,6 +7,9 @@ import App from './App.tsx';
 // Configure the API client base URL
 client.setConfig({
   baseUrl: import.meta.env.VITE_API_URL,
+  headers: {
+    'ngrok-skip-browser-warning': 'true',
+  },
 });
 
 createRoot(document.getElementById('root')!).render(
